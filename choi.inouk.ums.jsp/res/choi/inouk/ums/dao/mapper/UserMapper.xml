@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="choi.inouk.ums.dao.mapper.UserMapper">
+	<resultMap id="userMap" type="user">
+		<id property="userNo" column="user_no"/>
+		<result property="userName" column="user_name"/>
+		<result property="regDate" column="reg_date"/>
+	</resultMap>
+	
+	<select id="getUsers" resultMap="userMap">
+		select user_no, user_name, reg_date
+		from users order by user_no
+	</select>
+	
+	<select id="getUser" parameterType="int" resultMap="userMap">
+   		select user_no, user_name, reg_date from users where user_no=#{user_no}
+ 	</select>
+	
+	<insert id="addUser" parameterType="string">
+    	insert into users(user_no,user_name) values(
+		userno_seq.nextval, #{userName,jdbcType=VARCHAR})
+  	</insert>
+  
+  	<update id="updateUser" parameterType="user">
+    	update users set user_name=#{userName} where user_no=#{userNo}
+  	</update>
+  
+  	<delete id="delUser" parameterType="int">
+   		delete users where user_no=#{userNo}
+  	</delete>
+</mapper>
